@@ -1,4 +1,4 @@
-# Wunderflats coding exercise for Backend
+# Coding exercise for Backend
 
 Welcome to the future of housing. It all starts with adding types. Nobody wants
 an untyped apartment.
