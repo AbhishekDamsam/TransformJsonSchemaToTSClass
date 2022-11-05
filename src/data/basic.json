@@ -1,0 +1,131 @@
+{
+  "paths": {
+    "apartmentName": {
+      "path": "apartmentName",
+      "instance": "String",
+      "options": {
+        "default": ""
+      }
+    },
+    "availableFrom": {
+      "path": "availableFrom",
+      "instance": "Date",
+      "options": {}
+    },
+    "availableTo": {
+      "path": "availableTo",
+      "instance": "Date",
+      "options": {}
+    },
+    "createdAt": {
+      "path": "createdAt",
+      "instance": "Date",
+      "options": {}
+    },
+    "deleted": {
+      "path": "deleted",
+      "instance": "Boolean",
+      "options": {
+        "default": false
+      }
+    },
+    "deposit": {
+      "path": "deposit",
+      "instance": "Number",
+      "options": {
+        "default": 50000
+      }
+    },
+    "description": {
+      "path": "description",
+      "instance": "String",
+      "options": {}
+    },
+    "floor": {
+      "path": "floor",
+      "instance": "Number",
+      "options": {}
+    },
+    "geoBookings": {
+      "path": "geoBookings",
+      "instance": "Mixed",
+      "options": {}
+    },
+    "images": {
+      "path": "images",
+      "instance": "Array",
+      "options": {
+        "type": [null]
+      },
+      "caster": {
+        "instance": "String"
+      }
+    },
+    "landlord": {
+      "path": "landlord",
+      "instance": "ObjectID",
+      "options": {
+        "required": true,
+        "ref": "User"
+      }
+    },
+    "lastPublishedAt": {
+      "path": "lastPublishedAt",
+      "instance": "Date",
+      "options": {}
+    },
+    "price": {
+      "path": "price",
+      "instance": "Number",
+      "options": {}
+    },
+    "published": {
+      "path": "published",
+      "instance": "Boolean",
+      "options": {
+        "default": false
+      }
+    },
+    "rooms": {
+      "path": "rooms",
+      "instance": "Number",
+      "options": {}
+    },
+    "score": {
+      "path": "score",
+      "instance": "Number",
+      "options": {}
+    },
+    "titleDE": {
+      "path": "titleDE",
+      "instance": "String",
+      "options": {
+        "required": true
+      }
+    },
+    "titleEN": {
+      "path": "titleEN",
+      "instance": "String",
+      "options": {
+        "required": true
+      }
+    },
+    "updatedAt": {
+      "path": "updatedAt",
+      "instance": "Date",
+      "options": {}
+    },
+    "_id": {
+      "path": "_id",
+      "instance": "ObjectID",
+      "options": {
+        "auto": true
+      }
+    },
+    "__v": {
+      "path": "__v",
+      "instance": "Number",
+      "options": {}
+    }
+  }
+}

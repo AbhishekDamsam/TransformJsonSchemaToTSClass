@@ -1,0 +1,26 @@
+{
+  "name": "@wunderflats/backend-interview",
+  "description": "Backend interview exercise for Wunderflats",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon --watch src --ext ts --exec ts-node src/index.ts",
+    "test": "jest",
+    "test:first": "jest --testPathPattern src/first",
+    "test:second": "jest --testPathPattern src/second",
+    "start": "jest"
+  },
+  "devDependencies": {
+    "@types/dedent": "0.7.0",
+    "@types/jest": "24.0.25",
+    "@types/node": "13.1.4",
+    "@types/prettier": "^1.19.0",
+    "dedent": "0.7.0",
+    "jest": "27.0.6",
+    "nodemon": "2.0.2",
+    "prettier": "1.19.1",
+    "ts-jest": "27.0.3",
+    "ts-node": "8.5.4",
+    "typescript": "4.2.4"
+  }
+}
