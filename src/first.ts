@@ -1,12 +1,4 @@
-import { EntriesValueType, Records, Tuples } from "./types";
-
-function convertToTuple(key: string, object: Records): [string, EntriesValueType] {
-  return [key, object[key]];
-}
-
-function convertToRecord(key: string, value: EntriesValueType): Records {
-  return { [key]: value };
-}
+import { Records, Tuples } from "./types";
 
 /* ---------------------------------------------------------------------- */
 
@@ -22,8 +14,7 @@ function convertToRecord(key: string, value: EntriesValueType): Records {
  *
  */
 export function toEntries(input: Records): Tuples {
-  let tuples: Tuples = Object.keys(input).map((key: string) => convertToTuple(key, input));
-  return tuples;
+  return Object.keys(input).map((key: string) => [key, input[key]]);
 }
 
 /* ---------------------------------------------------------------------- */
@@ -41,9 +32,7 @@ export function toEntries(input: Records): Tuples {
  *
  */
 export function fromEntries(input: Tuples): Records {
-  let records: Records[] = input.map(([key, value]) => convertToRecord(key, value))
-  let response = Object.assign({}, ...records);
-  return response;
+  return Object.assign({}, ...input.map(([key, value]) => ({ [key]: value })));
 }
 
 /* ---------------------------------------------------------------------- */
@@ -57,36 +46,21 @@ export function fromEntries(input: Tuples): Records {
  *   Output - [ 1, 1, 2, 2, 3, 3 ]
  */
 export function duplicate(input: number[]): number[] {
-  let duplicates: number[] = [];
-  input.forEach((ele) => {
-    duplicates.push(ele, ele);
-  })
-  return duplicates;
+  return input.flatMap((num) => [num, num]);
 }
 
 /* ---------------------------------------------------------------------- */
 
 /**
- * reverseWords method takes a parameter which is a string and returns a string
- * where each word of input string is reversed order.
- *
- *   Input - "skcirT oyoY"
- *   Output - "oyoY skcirT"
- */
-
-function reverseWords(reverseText: string): string {
-  return reverseText.split(' ').reverse().join(' ');
-}
-
-/**
  * reverse method takes a parameter which is a string and returns a string
  * where each word of input string is reversed in place.
  *
- *   Input - "Yoyo Tricks"
- *   Output - "oyoY skcirT"
+ *   Input - "Hello, World!"
+ *   Output - "olleH, dlroW!"
  */
 
 export function reverse(input: string): string {
-  let reverseText = input.split('').reverse().join(''); //Reverse the characters in the input
-  return reverseWords(reverseText); //Reverse the words
+  return input.replace(/[a-z]+/gi, function (word) {
+    return word.split('').reverse().join('');
+  });
 }

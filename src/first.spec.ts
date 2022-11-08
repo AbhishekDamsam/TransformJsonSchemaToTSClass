@@ -103,7 +103,8 @@ describe("first task", function() {
     const testCases: Array<[string, string, string]> = [
       ["basic input", "John", "nhoJ"],
       ["empty string", "", ""],
-      ["multi word string", "js is awesome", "sj si emosewa"]
+      ["multi word string", "js is awesome", "sj si emosewa"],
+      ["multi word string with punctuation", "Hello, World!", "olleH, dlroW!"]
 
       /**
        * You may add your own test cases if you want here

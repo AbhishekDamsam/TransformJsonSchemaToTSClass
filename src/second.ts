@@ -16,15 +16,15 @@ type transform = {
 }
 
 function getDataType(path: IMongoosePath): string {
-  let dataType = typeMapping[path.instance as keyof typeof typeMapping] ?? 'unknown'; //To set a default data type
-
-  if (path.options.enum) {
-    dataType = `'${path.options.enum.join("' | '")}'`;
-  }
+  const dataType = typeMapping[path.instance as keyof typeof typeMapping] ?? 'unknown'; //To set a default data type
 
   if (dataType == typeMapping.Array) {
     //setting any data type if caster is missing
-    dataType = path.caster ? `${typeMapping[path.caster.instance as keyof typeof typeMapping]}[]` : `${typeMapping.Mixed}[]`;
+    return path.caster ? `${typeMapping[path.caster.instance as keyof typeof typeMapping]}[]` : `${typeMapping.Mixed}[]`;
+  }
+
+  if (path.options.enum) {
+    return `'${path.options.enum.join("' | '")}'`;
   }
 
   return dataType;
@@ -36,17 +36,14 @@ function getKeyName(key: string, path: IMongoosePath): string {
     // Default is optional
     key = key.replaceAll('.', '?.');
   }
-  return key + (!path.options ? '?' : path.options.required ? '' : '?'); // Assign property with optional/required
+  const isRequired = path.options?.required;
+  return key + (isRequired ? "" : "?")
 }
 
-function transformSchema(input: IMongooseSchema): transform[] {
+function transformIntoKeyValueObjects(input: IMongooseSchema): transform[] {
   return Object.keys(input.paths).sort().map((key: string) => {
     return { key: getKeyName(key, input.paths[key]), value: getDataType(input.paths[key]) + ';' }
   });
-}
-
-function createOrGetObjectReference(previousObject: Record<string, any>, CurrentPropertyName: string): any {
-  return previousObject[CurrentPropertyName] = previousObject[CurrentPropertyName] || {};
 }
 
 /**
@@ -58,12 +55,14 @@ function createOrGetObjectReference(previousObject: Record<string, any>, Current
  */
 export function convert(input: IMongooseSchema, entity: string = "Listing") {
 
-  let transformSchemaArray = transformSchema(input);
+  const transformSchemaArray = transformIntoKeyValueObjects(input);
 
-  let transformedTSobject = transformSchemaArray.reduce(function (prevTransformSchemaObject, currentSchemaObject) {
+  const transformedTSobject = transformSchemaArray.reduce(function (prevTransformSchemaObject, currentSchemaObject) {
     const paths = currentSchemaObject.key.split('.');
-    const propertyName = <string>paths.pop();
-    const objectReference = paths.reduce(createOrGetObjectReference, prevTransformSchemaObject);
+    const propertyName = paths.pop()!; // As object cannot be undefined
+    const objectReference = paths.reduce(function (previousObject: Record<string, any>, CurrentPropertyName: string): any {
+      return previousObject[CurrentPropertyName] = previousObject[CurrentPropertyName] || {}; //Get the object reference
+    }, prevTransformSchemaObject);
 
     objectReference[propertyName] = currentSchemaObject.value;
 
@@ -71,5 +70,5 @@ export function convert(input: IMongooseSchema, entity: string = "Listing") {
   }, {});
 
   return `export interface ${entity}
-  ${JSON.stringify(transformedTSobject).replace(/["]/g, "").replace(/(;,)/g, ';')}`;
+  ${JSON.stringify(transformedTSobject, null, 2).replace(/["]/g, "").replace(/(;,)/g, ';')}`;
 }

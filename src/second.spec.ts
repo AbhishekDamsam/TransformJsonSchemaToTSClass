@@ -4,7 +4,7 @@ import { format, Options } from "prettier";
 import schemaWithBasicFields from "./data/basic.json";
 import schemaWithEnumField from "./data/enum.json";
 import schemaWithNestedField from "./data/nested.json";
-import schemaWithNestedField1 from "./data/nested1.json";
+import schemaWithNestedDeepField from "./data/nested-deep.json";
 
 import { convert } from "./second";
 import { IMongooseSchema } from "./types";
@@ -106,15 +106,17 @@ describe("second task", function() {
     ],
 
     [
-      "nested1 schema",
-      schemaWithNestedField1,
+      "nested-deep schema",
+      schemaWithNestedDeepField,
       `export interface Listing {
         __v?: number;
         _id?: ObjectID;
         address?: {
           districts?: string[];
           location?: any;
-          street?: { street1?: string; street2?: string;
+          street?: {
+            street1?: string;
+            street2?: string;
           },
           streetNumber?: string;
         },
